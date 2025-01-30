@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdpyv3bmp3vg2"]
+
+[ext_resource type="Material" uid="uid://ta4h1giwt5wy" path="res://dragon.tres" id="1_qykm4"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D"]
+
+[node name="body" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material = ExtResource("1_qykm4")
+
+[node name="head" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.995854, 0.0909628, 0, -0.0909628, 0.995854, 1.41451, 0.0835806, -0.032136)
+material = ExtResource("1_qykm4")
+
+[node name="wingl" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125977, 0.145668, 1.21845)
+size = Vector3(1.25195, 0.145508, 1.82996)
+material = ExtResource("1_qykm4")
+
+[node name="wingr" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127434, 0.131238, -1.18952)
+size = Vector3(1.25195, 0.145508, 1.82996)
+material = ExtResource("1_qykm4")
+
+[node name="tail" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.370752, -0.928732, 0, 0.928732, 0.370752, 0, 0, 0, 1, -1.62125, 0.614225, 0)
+radius = 0.166004
+material = ExtResource("1_qykm4")
