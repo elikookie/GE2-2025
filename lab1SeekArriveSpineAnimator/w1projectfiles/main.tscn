@@ -1,3 +1,48 @@
-[gd_scene format=3 uid="uid://dtfr2jd8xapbq"]
+[gd_scene load_steps=7 format=3 uid="uid://dtfr2jd8xapbq"]
+
+[ext_resource type="PackedScene" uid="uid://bdpyv3bmp3vg2" path="res://dragon.tscn" id="1_xc5tj"]
+[ext_resource type="Script" path="res://dragon.gd" id="2_kyvv4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tjp15"]
+sky_top_color = Color(0.172549, 0.992157, 0.803922, 1)
+sky_horizon_color = Color(0.560347, 0.75645, 0.762493, 1)
+ground_bottom_color = Color(0.0688393, 0.033642, 0.246052, 1)
+ground_horizon_color = Color(0.560347, 0.75645, 0.762493, 1)
+
+[sub_resource type="Sky" id="Sky_hi75n"]
+sky_material = SubResource("ProceduralSkyMaterial_tjp15")
+
+[sub_resource type="Environment" id="Environment_fyfib"]
+background_mode = 2
+sky = SubResource("Sky_hi75n")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1mcio"]
+size = Vector3(3, 1, 4)
 
 [node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fyfib")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 26.7974, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_kyvv4")
+target = NodePath("../target")
+
+[node name="CSGCombiner3D" parent="CharacterBody3D" instance=ExtResource("1_xc5tj")]
+transform = Transform3D(0.00813455, -0.000428997, 0.999967, -0.0062123, 0.999981, 0.000479538, -0.999947, -0.006216, 0.00813173, -0.0231862, 0.737289, -0.201406)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273964, 0.786151, -0.236067)
+shape = SubResource("BoxShape3D_1mcio")
+
+[node name="target" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.704, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.997053, -0.0134701, 0.0755282, 0.00840602, 0.959358, 0.282066, -0.0762581, 0.281869, -0.956418, 16.5094, 8.29002, -23.206)
