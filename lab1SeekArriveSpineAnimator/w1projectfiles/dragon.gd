@@ -1,15 +1,19 @@
 extends CharacterBody3D
 
-@export var target:Node3D
+@export var target1:Node3D
+@export var target2:Node3D
 @export var force:Vector3
 @export var accel:Vector3
 @export var mass:float = 1
 @export var max_speed: float = 10
-
 @export var slowing_radius: float = 15.0 
 @export var stop_radius: float = 8
-var arrival_threshold: float = 0.1
+
+@export var ui_label: Label
+
+var current_target: Node3D
 var mode: String = "seek"
+var arrival_threshold: float = 0.1
 
 func seek(target) -> Vector3:
 	var to_target:Vector3 = target.global_position - global_position
@@ -38,14 +42,25 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_1:
 			mode = "seek"
+			current_target = target1
+			ui_label.text = "Seek"
 		elif event.keycode == KEY_2:
 			mode = "arrive"
+			current_target = target2
+			ui_label.text = "Arrive"
+
+func _ready():
+	ui_label.text = "Seek"
+	current_target = target1
 
 func _physics_process(delta: float) -> void:
+	if not current_target:
+		return
+	
 	if mode == "seek":
-		force = seek(target)
+		force = seek(current_target)
 	else:
-		force = arrive(target)
+		force = arrive(current_target)
 	
 	accel = force / mass
 	velocity = (velocity + accel * delta).limit_length(max_speed)
