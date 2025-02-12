@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6fiive38m74n"]
+
+[ext_resource type="Script" uid="uid://ceama6se3ec5g" path="res://FPController.gd" id="1_1im6y"]
+[ext_resource type="PackedScene" uid="uid://1klgn827pvr4" path="res://genai/whale.tscn" id="2_qjhvm"]
+[ext_resource type="Script" uid="uid://cx7u2q6o5o34f" path="res://car.gd" id="3_qjhvm"]
+
+[sub_resource type="Environment" id="Environment_f6dac"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.8804, 0, 53.0543)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.69224, 19.4541)
+script = ExtResource("1_1im6y")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.562949, -0.491036, 0.66481, 0, 0.804376, 0.594121, -0.826491, -0.33446, 0.452823, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_f6dac")
+
+[node name="Whale" parent="." instance=ExtResource("2_qjhvm")]
+
+[node name="CharacterBody3D2" parent="Whale/Head" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../../Marker3D")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("3_qjhvm")
+
+[editable path="Whale"]

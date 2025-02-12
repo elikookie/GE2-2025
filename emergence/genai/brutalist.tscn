@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://b6833bi7gr6dp"]
+
+[node name="BrutalistBuilding" type="Node3D"]
+
+[node name="Base" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+size = Vector3(20, 2, 20)
+
+[node name="Tower" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+size = Vector3(12, 18, 12)
+
+[node name="WindowCut" type="CSGBox3D" parent="Tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
+operation = 1
+size = Vector3(4, 5, 12.5)
+
+[node name="Roof" type="CSGBox3D" parent="Tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 0)
+size = Vector3(14, 2, 14)
+
+[node name="Overhang" type="CSGBox3D" parent="Tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 3)
+size = Vector3(16, 1.5, 8)
+
+[node name="Wing" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 6, 0)
+size = Vector3(8, 12, 8)
+
+[node name="WingWindow" type="CSGBox3D" parent="Wing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+operation = 1
+size = Vector3(3, 6, 8.5)

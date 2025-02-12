@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://cdl7pxjuqykwe"]
+[gd_scene load_steps=15 format=3 uid="uid://dhakyuxigioo6"]
 
-[ext_resource type="Script" uid="uid://cks4uwsgfyggy" path="res://boid.gd" id="1_g7hsx"]
-[ext_resource type="Script" uid="uid://ceama6se3ec5g" path="res://FPController.gd" id="2_q6o6m"]
-[ext_resource type="Script" uid="uid://df0wbq4s31n0w" path="res://timer.gd" id="3_tgpyc"]
-[ext_resource type="Script" uid="uid://cnxoai82orhd0" path="res://PathDrawer.gd" id="4_p2fuv"]
+[ext_resource type="Script" uid="uid://cks4uwsgfyggy" path="res://boid.gd" id="1_kuxis"]
+[ext_resource type="Script" uid="uid://df0wbq4s31n0w" path="res://timer.gd" id="2_3ipyk"]
+[ext_resource type="Script" uid="uid://ceama6se3ec5g" path="res://FPController.gd" id="3_jxdum"]
+[ext_resource type="Script" uid="uid://cnxoai82orhd0" path="res://PathDrawer.gd" id="4_nyk8q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tgpyc"]
 sky_top_color = Color(0.929874, 0.947462, 0.990667, 1)
@@ -48,9 +48,9 @@ albedo_color = Color(0.921569, 0.0705882, 1, 0.207843)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dik45")
 
-[node name="predator" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_target", "pursue_target", "path")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70418, 0.8565, -62.118)
-script = ExtResource("1_g7hsx")
+[node name="foll2" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_target", "pursue_target", "leader", "path")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.462004, 0.8565, -33.3094)
+script = ExtResource("1_kuxis")
 target = NodePath("../Marker3D")
 max_speed = 5
 arrive_enabled = false
@@ -58,16 +58,42 @@ arrive_target = NodePath("../Marker3D")
 slowing_distance = 10
 banking = 0.1
 player_steering_enabled = false
-pursue_target = NodePath("../prey")
+pursue_enabled = false
+pursue_target = NodePath("../leader")
+leader = NodePath("../leader")
 path = NodePath("../Path3D")
 path_follow_enabled = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="predator"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="foll2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("BoxMesh_q6o6m")
 surface_material_override/0 = SubResource("StandardMaterial3D_tgpyc")
 
-[node name="Marker3D" type="Marker3D" parent="predator"]
+[node name="Marker3D" type="Marker3D" parent="foll2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.59019, -8.88258)
+
+[node name="foll" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_target", "pursue_target", "leader", "path")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.0893, 0.8565, -33.3094)
+script = ExtResource("1_kuxis")
+target = NodePath("../Marker3D")
+max_speed = 5
+arrive_enabled = false
+arrive_target = NodePath("../Marker3D")
+slowing_distance = 10
+banking = 0.1
+player_steering_enabled = false
+pursue_enabled = false
+pursue_target = NodePath("../leader")
+leader = NodePath("../leader")
+path = NodePath("../Path3D")
+path_follow_enabled = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="foll"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_q6o6m")
+surface_material_override/0 = SubResource("StandardMaterial3D_tgpyc")
+
+[node name="Marker3D" type="Marker3D" parent="foll"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.59019, -8.88258)
 
 [node name="Marker3D" type="Marker3D" parent="."]
@@ -83,7 +109,7 @@ shadow_enabled = true
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
-script = ExtResource("3_tgpyc")
+script = ExtResource("2_3ipyk")
 
 [node name="ground" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_tgpyc")
@@ -91,17 +117,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_p2fuv")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.91706, 0, -0.398749, 0, 1, 0, 0.398749, 0, -0.91706, 9.14883, 5.98648, -43.6768)
-script = ExtResource("2_q6o6m")
+script = ExtResource("3_jxdum")
 rot_speed = 180.0
 
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 curve = SubResource("Curve3D_tgpyc")
-script = ExtResource("4_p2fuv")
+script = ExtResource("4_nyk8q")
 
-[node name="prey" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_target", "path")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.70418, 6.68614, -23.589)
-script = ExtResource("1_g7hsx")
+[node name="leader" type="CharacterBody3D" parent="." node_paths=PackedStringArray("target", "arrive_target", "path")]
+transform = Transform3D(0.00474733, 0, 0.999989, 0, 1, 0, -0.999989, 0, 0.00474733, 8.70418, 6.68614, -23.589)
+script = ExtResource("1_kuxis")
 target = NodePath("../Marker3D")
 arrive_enabled = false
 arrive_target = NodePath("../Marker3D")
@@ -111,12 +137,12 @@ player_steering_enabled = false
 pursue_enabled = false
 path = NodePath("../Path3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="prey"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="leader"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("BoxMesh_q6o6m")
 surface_material_override/0 = SubResource("StandardMaterial3D_dik45")
 
-[node name="Marker3D" type="Marker3D" parent="prey"]
+[node name="Marker3D" type="Marker3D" parent="leader"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.59019, -8.88258)
 
 [connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]
